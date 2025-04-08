@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en"> 
 <head>
     <title>Websocket Chat</title>
     <link rel="stylesheet" href="style.css">
@@ -7,11 +7,11 @@
 </head>
 <body>
     <h1>WebSocket Chat</h1>
-    <p><span><h3>Total Users: TODO</h3></span></p>
-    <div class= "chat-container" id='chatbox'>
-    <input type="text" id="message" placeholder="Type a message..."">
+    <h3>Total Users: <span id='userCount'>0</span></h3> 
+    <div id='chatbox' class= "chat-container"></div>
+
+    <input type="text" id="message" placeholder="Type a message...">
     <button onclick="sendMessage()">Send</button>
-    </div>
 
     <script src="chat.js"></script>
 </body>

@@ -1,5 +1,4 @@
-import asyncio
-import websockets
+import asyncio, json, websockets
 
 '''to run client and server:
 1. - open up 2 terminals for client anf server: 
@@ -11,40 +10,59 @@ import websockets
 '''
 
 connected_clients = set()
+client_usernames = {}  # maps websocket -> username
 
 async def handle_client(websocket): 
     ''' connection handler function:
     This function defines how to interact with that client '''
-    # Register the new client
+    # 1. Register the new client
     connected_clients.add(websocket)
-    # await notify_users(f"A user has joined the chat. Total users: {len(connected_clients)} ") # TODO
-    await notify_users(f"A user has joined the chat.") # TODO
+
+    # 2. wait for the join packet
+    raw = await websocket.recv()
+    join = json.loads(raw)
+    username = join.get("username", "Anonymous")
+    client_usernames[websocket] = username
+
+    # 3. Broacast "X has joined" + new user count
+    await notify_system(f"{username} has joined the chat.")
+    await broadcast_user_count()
+
     try:
-        async for message in websocket:
-            # Broadcast the message to all connected clients
-            for client in connected_clients:
-                 await client.send(message)
+        async for raw in websocket:
+            data = json.loads(raw)
+            if data.get("type") == "message":
+                msg = f"{username}: {data['message']}"
+                await broadcast_chat(msg)
     except Exception as e:
-        print(f"Error encountered: {e}")
+        print("Error:", e)
+
     finally:
-        # Unregister the client
-        connected_clients.remove(websocket) # TODO?
-        # await notify_users(f"A user has left the chat. Total users: {len(connected_clients)}") # TODO
-        await notify_users(f"A user has left the chat.") # TODO
-       
+        # Clean up on disconnect
+        connected_clients.remove(websocket)
+        client_usernames.pop(websocket, None)
+        await notify_system(f"{username} has lef the chat.")
+        await broadcast_user_count()
 
-async def notify_users(message):
-    if connected_clients:   # asyncio.wait doesn't accept an empty list
-        await asyncio.gather(*[client.send(message) for client in connected_clients])
-# TODO update so that you can just say client username
+async def broadcast_chat(msg):
+    packet = json.dumps({"type": "chat", "message": msg})
+    await asyncio.gather(*(client.send(packet) for client in connected_clients))
 
-    
+async def notify_system(msg):
+    packet = json.dumps({"type": "chat", "message": msg})
+    await asyncio.gather(*(client.send(packet) for client in connected_clients))
+
+async def broadcast_user_count():
+    client_count = len(connected_clients)
+    packet = json.dumps({"type": "userCount", "count": client_count})
+    await asyncio.gather(*(client.send(packet) for client in connected_clients))
+
 async def main():
     host = "localhost"
     port = 6789
-    server = await websockets.serve(handle_client, host, port)
-    print(f"Server is online {host}:{port}")
-    await server.wait_closed() # waits for server to be explicitely closed
+    async with websockets.serve(handle_client, host, port):
+        print(f"Server is online {host}:{port}")
+        await asyncio.Future() # Run forever
 
 if __name__ == "__main__":
     asyncio.run(main())
