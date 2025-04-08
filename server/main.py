@@ -2,10 +2,11 @@ import asyncio
 import websockets
 
 '''to run client and server:
-1. - make sure venv is activated in both termnals: source chat_app/bin/activate
+1. - open up 2 terminals for client anf server: 
+    make sure venv is activated in both termnals: source chat_app/bin/activate
 2 - run html file in client directory in terminal: python3 -m http.server 8000
 3 - run main server in web_socket_app -> server  ditectory: python3 main.py
-4. - open local host: https://localhost:8000/chat.html
+4. - open local host: http://localhost:8000/chat.html
 5. - inspect /open dev tools -> console to see detailed exceptions
 '''
 
