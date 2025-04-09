@@ -2,9 +2,10 @@ import asyncio, json, websockets
 
 '''to run client and server:
 1. - open up 2 terminals for client anf server: 
-    make sure venv is activated in both termnals: source chat_app/bin/activate
+    - make sure venv is activated in both termnals: source chat_app/bin/activate
+    - to deactivate: `deactivate` in root of venv
 2 - run html file in client directory in terminal: python3 -m http.server 8000
-3 - run main server in web_socket_app -> server  ditectory: python3 main.py
+3 - run main server in web_socket_app -> server  directory: python3 main.py
 4. - open local host: http://localhost:8000/chat.html
 5. - inspect /open dev tools -> console to see detailed exceptions
 '''
@@ -25,7 +26,7 @@ async def handle_client(websocket):
     client_usernames[websocket] = username
 
     # 3. Broacast "X has joined" + new user count
-    await notify_system(f"{username} has joined the chat.")
+    await notify_system(f"++ {username} has joined the chat. ++")
     await broadcast_user_count()
 
     try:
@@ -41,7 +42,7 @@ async def handle_client(websocket):
         # Clean up on disconnect
         connected_clients.remove(websocket)
         client_usernames.pop(websocket, None)
-        await notify_system(f"{username} has lef the chat.")
+        await notify_system(f"-- {username} has left the chat. --")
         await broadcast_user_count()
 
 async def broadcast_chat(msg):
