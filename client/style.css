@@ -3,9 +3,22 @@
 /* Global Styles */
 body {
     font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
+    background-color: #f4f4f4; 
     margin: 0;
     padding: 0;
+}
+
+/* Center the wrapper on the page */
+.wrapper {
+    width: 80%;  /* same width as .chat-container */
+    max-width: 600px; /* prevents it from getting too wide on large screens */
+    margin: 20px auto  /* top/bottom 20px, left/right auto = centered */
+}
+
+/* Center the headings’ text */
+.wrapper h1,
+.wrapper h3 {
+  text-align: center;
 }
 
 /* Chat Container */
@@ -13,10 +26,42 @@ body {
     width: 80%;
     max-width: 600px;
     margin: auto;
-    background: white;
+    background-color: #bcf6f7;
     padding: 20px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0 10px #17e5e8 /* rgba(0, 0, 0, 0.1); */
 }
+
+/* 2) Make the input and button sit side by side */
+.input-container {
+    display: flex;        /* flexbox makes it easy to align children in a row */
+    margin-bottom: 10px;  /* space below the input row before the chatbox */
+  }
+  
+/* 3) Let the text field fill the remaining space */
+.input-container input {
+flex: 1;              /* grow to fill available space */
+padding: 10px;        /* make it tall enough to click easily */
+font-size: 16px;      /* readable text size */
+border: 1px solid #ccc;
+border-radius: 4px 0 0 4px; /* round only the left corners */
+}
+
+/* 4) Style the button, and keep it flush to the input */
+.input-container button {
+padding: 10px 20px;
+font-size: 16px;
+border: none;
+border-radius: 0 4px 4px 0;  /* round only the right corners */
+cursor: pointer;
+transition: background-color 0.3s ease;
+}
+
+/* Re‑use your existing hover rule */
+.input-container button:hover {
+background-color: #81e685;
+}
+  
+
 
 /* Base button styling */
 button {
@@ -29,5 +74,7 @@ button {
 
 /* Hover effect */
 button:hover {
-    background-color: #45a049; /* Darker green */
+    background-color: #81e685 /*lighter green */ /* #45a049; Darker green */
 }
+
+

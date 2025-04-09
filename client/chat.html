@@ -6,12 +6,17 @@
 
 </head>
 <body>
-    <h1>WebSocket Chat</h1>
-    <h3>Total Users: <span id='userCount'>0</span></h3> 
-    <div id='chatbox' class= "chat-container"></div>
+    <div class='wrapper'>
+        <h1>WebSocket Chat</h1>
+        <h3>Total Users: <span id='userCount'>0</span></h3>
+        
+        <div class='input-container'>
+        <input type="text" id="message" placeholder="Type a message...">
+        <button onclick="sendMessage()">Send</button>
+        </div>
 
-    <input type="text" id="message" placeholder="Type a message...">
-    <button onclick="sendMessage()">Send</button>
+        <div id='chatbox' class= "chat-container"></div>
+    </div>
 
     <script src="chat.js"></script>
 </body>
