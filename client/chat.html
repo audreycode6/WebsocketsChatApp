@@ -18,6 +18,23 @@
         <div id='chatbox' class= "chat-container"></div>
     </div>
 
+  <!-- In‑app modal for username -->
+  <dialog id="usernameDialog">
+    <form id="usernameForm" method="dialog" novalidate>
+      <label for="usernameInput">Choose a username:</label><br/>
+      <input
+        type="text"
+        id="usernameInput"
+        required
+        placeholder="e.g. Alice"
+        autofocus
+      />
+      <menu>
+        <button type="submit">Join Chat</button>
+      </menu>
+    </form>
+  </dialog>
+
     <script src="chat.js"></script>
 </body>
 </html>
