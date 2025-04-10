@@ -26,7 +26,7 @@ async def handle_client(websocket):
     client_usernames[websocket] = username
 
     # 3. Broacast "X has joined" + new user count
-    await notify_system(f"++ {username} has joined the chat. ++")
+    await notify_system(f"++ {username} has joined the chat ++")
     await broadcast_user_count()
 
     try:
@@ -42,7 +42,7 @@ async def handle_client(websocket):
         # Clean up on disconnect
         connected_clients.remove(websocket)
         client_usernames.pop(websocket, None)
-        await notify_system(f"-- {username} has left the chat. --")
+        await notify_system(f"-- {username} has left the chat --")
         await broadcast_user_count()
 
 async def broadcast_chat(msg):
