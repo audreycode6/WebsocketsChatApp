@@ -37,7 +37,7 @@ body {
     margin-bottom: 10px;  /* space below the input row before the chatbox */
   }
   
-/* 3) Let the text field fill the remaining space */
+/* Let the text field fill the remaining space */
 .input-container input {
 flex: 1;              /* grow to fill available space */
 padding: 10px;        /* make it tall enough to click easily */
@@ -46,7 +46,7 @@ border: 1px solid #ccc;
 border-radius: 4px 0 0 4px; /* round only the left corners */
 }
 
-/* 4) Style the button, and keep it flush to the input */
+/*  Style the button, and keep it flush to the input */
 .input-container button {
 padding: 10px 20px;
 font-size: 16px;
@@ -60,8 +60,6 @@ transition: background-color 0.3s ease;
 .input-container button:hover {
 background-color: #81e685;
 }
-  
-
 
 /* Base button styling */
 button {
